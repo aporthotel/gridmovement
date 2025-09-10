@@ -1,0 +1,83 @@
+[gd_scene load_steps=7 format=3 uid="uid://cepo131m7h40h"]
+
+[ext_resource type="Script" uid="uid://budxgxhrexf1s" path="res://scripts/Unit.gd" id="1_fqlnf"]
+[ext_resource type="Texture2D" uid="uid://cmeeirm4ons7y" path="res://assets/unit_shadow.svg" id="2_aa524"]
+
+[sub_resource type="Animation" id="Animation_aa524"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fqlnf"]
+resource_name = "idle"
+step = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_nqku5"]
+resource_name = "selected"
+length = 1.4
+loop_mode = 1
+step = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.589096, 0.589096, 0.589096, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_appqu"]
+_data = {
+&"RESET": SubResource("Animation_aa524"),
+&"idle": SubResource("Animation_fqlnf"),
+&"selected": SubResource("Animation_nqku5")
+}
+
+[node name="Unit" type="Path2D"]
+script = ExtResource("1_fqlnf")
+move_speed = 600.0
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+rotates = false
+loop = false
+
+[node name="Shadow" type="Sprite2D" parent="PathFollow2D"]
+modulate = Color(0.101961, 0.109804, 0.0901961, 0.329412)
+position = Vector2(0, 5.432)
+texture = ExtResource("2_aa524")
+
+[node name="Sprite" type="Sprite2D" parent="PathFollow2D"]
+position = Vector2(2, 0)
+scale = Vector2(0.24, 0.24)
+offset = Vector2(0, -185)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_appqu")
+}
